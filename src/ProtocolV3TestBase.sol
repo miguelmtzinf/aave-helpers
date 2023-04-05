@@ -296,9 +296,7 @@ contract ProtocolV3TestBase is CommonTestBase {
         );
         string memory key = vm.toString(address(strategy));
         vm.serializeAddress(key, 'address', address(strategy));
-        bool defaultIR = false;
         try strategy.getBaseStableBorrowRate() returns (uint256 baseStableBorrowRate) {
-          defaultIR = true;
           vm.serializeString(key, 'baseStableBorrowRate', vm.toString(baseStableBorrowRate));
           vm.serializeString(key, 'stableRateSlope1', vm.toString(strategy.getStableRateSlope1()));
           vm.serializeString(key, 'stableRateSlope2', vm.toString(strategy.getStableRateSlope2()));
