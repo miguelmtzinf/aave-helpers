@@ -49,10 +49,10 @@ contract ProtocolV2TestBase is CommonTestBase {
    * @param pool the pool to be snapshotted
    * @return ReserveConfig[] list of configs
    */
-  function createConfigurationSnapshot(
-    string memory reportName,
-    ILendingPool pool
-  ) public returns (ReserveConfig[] memory) {
+  function createConfigurationSnapshot(string memory reportName, ILendingPool pool)
+    public
+    returns (ReserveConfig[] memory)
+  {
     string memory path = string(abi.encodePacked('./reports/', reportName, '.json'));
     vm.writeFile(path, '{ "reserves": {}, "strategies": {}, "poolConfiguration": {} }');
     ReserveConfig[] memory configs = _getReservesConfigs(pool);
@@ -87,9 +87,11 @@ contract ProtocolV2TestBase is CommonTestBase {
   /**
    * @dev returns the first collateral in the list that cannot be borrowed in stable mode
    */
-  function _getFirstCollateral(
-    ReserveConfig[] memory configs
-  ) private pure returns (ReserveConfig memory config) {
+  function _getFirstCollateral(ReserveConfig[] memory configs)
+    private
+    pure
+    returns (ReserveConfig memory config)
+  {
     for (uint256 i = 0; i < configs.length; i++) {
       if (configs[i].usageAsCollateralEnabled && !configs[i].stableBorrowRateEnabled)
         return configs[i];
@@ -107,7 +109,7 @@ contract ProtocolV2TestBase is CommonTestBase {
   ) internal {
     // test all basic interactions
     for (uint256 i = 0; i < configs.length; i++) {
-      uint256 amount = 100 * 10 ** configs[i].decimals;
+      uint256 amount = 100 * 10**configs[i].decimals;
       if (!configs[i].isFrozen) {
         _deposit(configs[i], pool, user, amount);
         _skipBlocks(1000);
@@ -133,7 +135,7 @@ contract ProtocolV2TestBase is CommonTestBase {
     ReserveConfig memory collateralConfig = _getFirstCollateral(configs);
     _deposit(collateralConfig, pool, user, 1000000 ether);
     for (uint256 i = 0; i < configs.length; i++) {
-      uint256 amount = 10 ** configs[i].decimals;
+      uint256 amount = 10**configs[i].decimals;
       if (configs[i].borrowingEnabled) {
         _deposit(configs[i], pool, EOA, amount * 2);
         this._borrow(configs[i], pool, user, amount, false);
@@ -155,7 +157,7 @@ contract ProtocolV2TestBase is CommonTestBase {
     ReserveConfig memory collateralConfig = _getFirstCollateral(configs);
     _deposit(collateralConfig, pool, user, 1000000 ether);
     for (uint256 i = 0; i < configs.length; i++) {
-      uint256 amount = 10 ** configs[i].decimals;
+      uint256 amount = 10**configs[i].decimals;
       if (configs[i].borrowingEnabled && configs[i].stableBorrowRateEnabled) {
         _deposit(configs[i], pool, EOA, amount * 2);
         this._borrow(configs[i], pool, user, amount, true);
@@ -430,10 +432,11 @@ contract ProtocolV2TestBase is CommonTestBase {
     return vars.configs;
   }
 
-  function _getStructReserveTokens(
-    IAaveProtocolDataProvider pdp,
-    address underlyingAddress
-  ) internal view returns (ReserveTokens memory) {
+  function _getStructReserveTokens(IAaveProtocolDataProvider pdp, address underlyingAddress)
+    internal
+    view
+    returns (ReserveTokens memory)
+  {
     ReserveTokens memory reserveTokens;
     (reserveTokens.aToken, reserveTokens.stableDebtToken, reserveTokens.variableDebtToken) = pdp
       .getReserveTokensAddresses(underlyingAddress);
@@ -501,10 +504,11 @@ contract ProtocolV2TestBase is CommonTestBase {
       });
   }
 
-  function _findReserveConfig(
-    ReserveConfig[] memory configs,
-    address underlying
-  ) internal pure returns (ReserveConfig memory) {
+  function _findReserveConfig(ReserveConfig[] memory configs, address underlying)
+    internal
+    pure
+    returns (ReserveConfig memory)
+  {
     for (uint256 i = 0; i < configs.length; i++) {
       if (configs[i].underlying == underlying) {
         // Important to clone the struct, to avoid unexpected side effect if modifying the returned config
@@ -693,10 +697,10 @@ contract ProtocolV2TestBase is CommonTestBase {
     }
   }
 
-  function _requireNoChangeInConfigs(
-    ReserveConfig memory config1,
-    ReserveConfig memory config2
-  ) internal pure {
+  function _requireNoChangeInConfigs(ReserveConfig memory config1, ReserveConfig memory config2)
+    internal
+    pure
+  {
     require(
       keccak256(abi.encodePacked(config1.symbol)) == keccak256(abi.encodePacked(config2.symbol)),
       '_noReservesConfigsChangesApartNewListings() : UNEXPECTED_SYMBOL_CHANGED'
