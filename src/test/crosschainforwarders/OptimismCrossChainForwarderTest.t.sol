@@ -21,7 +21,7 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
   uint256 mainnetFork;
   uint256 optimismFork;
 
-  address public constant OPTIMISM_BRIDGE_EXECUTOR = AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
+  address public immutable OPTIMISM_BRIDGE_EXECUTOR = AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
 
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);

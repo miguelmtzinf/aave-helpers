@@ -20,7 +20,7 @@ import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfa
  */
 contract CrosschainForwarderArbitrum {
   IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
-  address public constant ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
+  address public immutable ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
   address public constant ARBITRUM_GUARDIAN = 0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
   // amount of gwei to overpay on basefee for fast submission

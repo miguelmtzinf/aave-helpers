@@ -28,7 +28,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
   IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
-  address public constant ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
+  address public immutable ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
 
   uint256 public constant MESSAGE_LENGTH = 580;
 
